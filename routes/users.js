@@ -21,7 +21,8 @@ router.route('/')
   .get(function(request, response) {
     client.hkeys('users', function(error, names) {
       if(error) throw error;
-      response.json(names);
+      console.log(names);
+      response.render('index.ejs', { names: names} );
     });
   })
 
@@ -36,15 +37,22 @@ router.route('/')
       response.status(201).json(newUser.name);
     });
   });
+// router.route('/')
 
 router.route('/:name')
   .get(function(request, response) {
     client.hget('users', request.params.name, function(error, description){
+      if(error) throw error;
       response.render('show.ejs', { user:
         { name: request.params.name, description: description }
       });
     });
   });
+// router.route('/:name')
+
+
+
+
 // REGISTER ROUTES
 // we might not need this
 // app.use('/api', router);
