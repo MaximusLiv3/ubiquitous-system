@@ -11,7 +11,7 @@ var urlencode = bodyParser.urlencoded({ extended: true });
 //     client.auth(rtg.auth.split(":")[1]);
 // } else {
     var client = require("redis").createClient();
-    
+
     //client.select((process.env.NODE_ENV || 'development').length);
 // }
 
@@ -37,10 +37,14 @@ router.route('/')
     });
   });
 
-
-
-
-
+router.route('/:name')
+  .get(function(request, response) {
+    client.hget('users', request.params.name, function(error, description){
+      response.render('show.ejs', { user:
+        { name: request.params.name, description: description }
+      });
+    });
+  });
 // REGISTER ROUTES
 // we might not need this
 // app.use('/api', router);
