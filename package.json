@@ -1,9 +1,12 @@
 {
   "name": "node-api",
+  "version": "1.0.0",
   "main": "server.js",
+  "description": "A simple api for RESTful operations with users",
   "dependencies": {
+    "body-parser": "~1.0.1",
+    "ejs": "^2.5.2",
     "express": "~4.0.0",
-    "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1"
+    "redis": "^2.6.2"
   }
 }
