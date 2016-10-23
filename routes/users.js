@@ -10,9 +10,9 @@ var router = express.Router();
 
 router.route('/')
   .get(function(request, response) {
-    User.find({}, function(err, users) {
-      if (err) throw err;
-      console.log('users',users);
+    User.find({}, function(error, users) {
+      if (error) throw err;
+      // console.log('users', users);
       response.render('index.ejs', { users: users } );
     });
   })
@@ -30,15 +30,14 @@ router.route('/')
 //   });
 // // router.route('/')
 
-// router.route('/:name')
-//   .get(function(request, response) {
-//     client.hget('users', request.params.name, function(error, description){
-//       if(error) throw error;
-//       response.render('show.ejs', { user:
-//         { name: request.params.name, description: description }
-//       });
-//     });
-//   });
+router.route('/:username')
+  .get(function(request, response) {
+    User.find({ username: request.params.username }, function(error, user){
+      if(error) throw error;
+      // console.log("user returned: " , user);
+      response.render('show.ejs', { user: user[0] } );
+    });
+  });
 // router.route('/:name')
 
 
