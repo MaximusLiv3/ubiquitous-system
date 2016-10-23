@@ -33,7 +33,7 @@ for (var i = 0; i < 20; i++) {
     password: 'password',
     age:      Math.floor(Math.random() * 50 + 18),
     score:    Math.floor(Math.random() * 550 + 300),
-    gender:   Math.floor(Math.random() * 2) ? "male" : "female"
+    gender:   Math.floor(Math.random() * 2) ? "men" : "women"
   });
   newUser.photoUrl = "https://randomuser.me/api/portraits/" + newUser.gender + "/" + Math.floor(Math.random() * 89 + 10) + ".jpg"
   newUser.save(function(err) {if (err) throw err;});

@@ -13,9 +13,9 @@ router.route('/')
     User.find({}, function(error, users) {
       if (error) throw err;
       // console.log('users', users);
-      response.render('index.ejs', { users: users } );
+      response.render('main.ejs', { users: users } );
     });
-  })
+  });
 
 //   .post(urlencode, function(request, response) {
 //     var newUser = request.body;
@@ -30,14 +30,14 @@ router.route('/')
 //   });
 // // router.route('/')
 
-router.route('/:username')
-  .get(function(request, response) {
-    User.find({ username: request.params.username }, function(error, user){
-      if(error) throw error;
-      // console.log("user returned: " , user);
-      response.render('show.ejs', { user: user[0] } );
-    });
-  });
+// router.route('/:username')
+//   .get(function(request, response) {
+//     User.find({ username: request.params.username }, function(error, user){
+//       if(error) throw error;
+//       // console.log("user returned: " , user);
+//       response.render('show.ejs', { user: user[0] } );
+//     });
+//   });
 // router.route('/:name')
 
 
