@@ -4,21 +4,7 @@ var urlencode = bodyParser.urlencoded({ extended: true });
 
 var User = require('../models/user');
 
-// create a new user
-var newUser = User({
-  name: 'Peter Quill',
-  username: 'username',
-  password: 'password',
-  age: 40,
-  score: 800,
-  gender: 'male'
-});
 
-// newUser.save(function(err) {
-//   if (err) throw err;
-
-//   console.log('User saved successfully!');
-// });
 
 var router = express.Router();
 
