@@ -2,52 +2,57 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var urlencode = bodyParser.urlencoded({ extended: true });
 
-// INSTALL REDIS
-// if (process.env.REDISTOGO_URL) {
-//     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-//     var client = require("redis").createClient(rtg.port, rtg.hostname);
-//     // Node's url lib does not seperate auth into user and pass
-//     // so we split by the ':' and take the password
-//     client.auth(rtg.auth.split(":")[1]);
-// } else {
-    var client = require("redis").createClient();
+var User = require('../models/user');
 
-    //client.select((process.env.NODE_ENV || 'development').length);
-// }
+// create a new user
+var newUser = User({
+  name: 'Peter Quill',
+  username: 'username',
+  password: 'password',
+  age: 40,
+  score: 800,
+  gender: 'male'
+});
+
+// newUser.save(function(err) {
+//   if (err) throw err;
+
+//   console.log('User saved successfully!');
+// });
 
 var router = express.Router();
 
 router.route('/')
   .get(function(request, response) {
-    client.hkeys('users', function(error, names) {
-      if(error) throw error;
-      console.log(names);
-      response.render('index.ejs', { names: names} );
+    User.find({}, function(err, users) {
+      if (err) throw err;
+      console.log('users',users);
+      response.render('index.ejs', { users: users } );
     });
   })
 
-  .post(urlencode, function(request, response) {
-    var newUser = request.body;
-    if(!newUser.name || !newUser.description) {
-      response.sendStatus(400);
-      return false;
-    }
-    client.hset('users', newUser.name, newUser.description, function(error, name) {
-      if(error) throw error;
-      response.status(201).json(newUser.name);
-    });
-  });
-// router.route('/')
+//   .post(urlencode, function(request, response) {
+//     var newUser = request.body;
+//     if(!newUser.name || !newUser.description) {
+//       response.sendStatus(400);
+//       return false;
+//     }
+//     client.hset('users', newUser.name, newUser.description, function(error, name) {
+//       if(error) throw error;
+//       response.status(201).json(newUser.name);
+//     });
+//   });
+// // router.route('/')
 
-router.route('/:name')
-  .get(function(request, response) {
-    client.hget('users', request.params.name, function(error, description){
-      if(error) throw error;
-      response.render('show.ejs', { user:
-        { name: request.params.name, description: description }
-      });
-    });
-  });
+// router.route('/:name')
+//   .get(function(request, response) {
+//     client.hget('users', request.params.name, function(error, description){
+//       if(error) throw error;
+//       response.render('show.ejs', { user:
+//         { name: request.params.name, description: description }
+//       });
+//     });
+//   });
 // router.route('/:name')
 
 
